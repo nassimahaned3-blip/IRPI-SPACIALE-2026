@@ -1,4 +1,4 @@
-markdown# Formalisation Mathématique et Modèle Homothétique
+# Formalisation Mathématique et Modèle Homothétique
 
 Le calcul de l'Index de Risque Probabiliste Intégré ($IRPI_{\text{Spatial}}$) repose sur une fonction produit non compensatoire de type Cobb-Douglas, indexée sur l'effet multiplicateur de la masse de stockage confinée réelle ($M_{\text{kg}}$) :
 
