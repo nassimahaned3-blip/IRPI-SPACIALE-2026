@@ -10,4 +10,4 @@ $$R_{\text{Thermodynamique}} = 15 \times \sqrt[3]{\text{Masse}_{\text{Stockée (
 
 Afin de neutraliser les pathologies de saturation visuelle des moniteurs sur l'interface graphique de l'APC, le moteur visuel applique une réduction homothétique d'échelle d'un facteur de dix, découplant le flux de calcul réel du rendu de l'écran :
 
-$$R_{\text{Affichage Écran}} = \frac{R_{\text{Thermody
+$$R_{\text{Affichage Écran}} = \frac{R_{\text{Thermodynamique / Légal}}}{10}$$
