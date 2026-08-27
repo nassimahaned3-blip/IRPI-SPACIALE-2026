@@ -1,32 +1,32 @@
 # 🛰️ Progiciel Expert : GeoIRPI v6.0
 ## Direction de l'Environnement — Wilaya de Tizi Ouzou
-### Évaluation Composite de l'Index de Risque Probabiliste Intégré (IRPI) et Screening Spatial Multiniveau
+### Matrice d'Aide à la Décision Préliminaire (Screening) par Approche Linéaire et Multi-Verrous Réglementaires
 
-Ce dépôt présente le cadre algorithmique d'évaluation rapide et de screening pré-diagnostic des nouvelles demandes d'implantation industrielle à l'échelle de la commune de Larbaâ Nath Irathen [Local]. Le modèle s'appuie exclusivement sur la formulation d'origine de l'index composite IRPI.
-
----
-
-### 🔬 1. L'Équation Fondamentale de l'Indice IRPI Spatial
-L'Index de Risque Probabiliste Intégré ($\text{IRPI}_{\text{Spatial}}$) mesure la criticité globale d'un établissement en combinant trois facteurs indissociables par un produit non compensatoire [Calcul] :
-
-$$\text{IRPI}_{\text{Spatial}} = \Phi_{\text{Danger}} \times \pi_{\text{Défaillance}} \times \Omega_{\text{Environnement}}$$
-
-#### A. Le Potentiel Énergétique Source Normalisé ($\Phi_{\text{Danger}}$)
-L'argument de la fonction logarithmique est normalisé par une constante d'énergie de référence ($E_0 = 1$ MJ) pour assurer l'adimensionnalité rigoureuse de la charge brute disponible [Calcul] :
-
-$$\Phi_{\text{Danger}} = \log_{10} \left( \frac{M_{\text{kg}} \times \Delta H_{\text{Substance (MJ/kg)}}}{1 \text{ MJ}} \right)$$
-
-#### B. Le Facteur de Défaillance Cinétique ($\pi_{\text{Défaillance}}$)
-Probabilité intrinsèque de rupture, d'incendie ou de fuite de confinement liée à la classe et à la nature technique de l'activité.
-
-#### C. Le Facteur de Vulnérabilité Spatiale et Environnementale ($\Omega_{\text{Environnement}}$)
-Coefficient fluide qui évalue l'éloignement géodésique réel de l'usine par rapport aux habitations traditionnelles de la Taddart et aux réseaux d'énergie [Local, Calcul].
+Ce dépôt présente le cadre algorithmique d'évaluation rapide et de triage des nouvelles demandes d'implantation industrielle à l'échelle de la commune de Larbaâ Nath Irathen. Le modèle élimine les effets de masque et les compressions logarithmiques pour restituer la proportionnalité physique des risques.
 
 ---
 
-### ⚖️ 2. Verrou de Souveraineté National Unique
-Le logiciel maintient une correspondance d'échelle stricte à 1:1 en mètres au sol sur le fond de carte. L'arbre de décision n'applique qu'un seul et unique disjoncteur réglementaire bloquant dicté par le droit algérien : le couloir d'inconstructibilité de 150 mètres autour des gazoducs Sonelgaz (Décret présidentiel n° 07-144) [Local, Finance] :
+### 🔬 1. Formalisation du Potentiel Source Linéaire
+L'évaluation quantifie l'Indice de Gravité Potentielle ($\Phi_{\text{Danger}}$) à partir de la charge énergétique brute normalisée par une constante de référence ($E_0 = 10^6 \text{ MJ}$), assurant la linéarité de la menace face aux stockages de grande envergure :
 
-$$\text{Verdict}_{\text{Souverain}} = \left[ D_{\text{Gazoduc}} \ge 150\,\text{m} \right]$$
+$$\Phi_{\text{Danger}} = \frac{M_{\text{kg}} \times \Delta H_{\text{Substance (MJ/kg)}}}{10^6 \text{ MJ}}$$
 
-Le score numérique de l'indice $\text{IRPI}_{\text{Spatial}}$ sert d'indicateur d'aide à la décision pour orienter et prioriser le contrôle des inspecteurs sur le terrain [Finance, Calcul].
+---
+
+### 📐 2. Indice Composite IRPI sans Effet de Masque
+Afin d'éviter qu'une faible probabilité de défaillance cinétique ($\pi_{\text{Défaillance}}$) n'annule ou ne masque l'impact d'un sinistre majeur en zone habitée, l'architecture abandonne la structure strictement multiplicative au profit d'une formulation combinée pondérée :
+
+$$\text{IRPI}_{\text{Spatial}} = \Phi_{\text{Danger}} \times \left( \beta_1 \cdot \pi_{\text{Défaillance}} + \beta_2 \cdot \Omega_{\text{Environnement}} \right)$$
+
+---
+
+### ⚖️ 3. Arbre de Décision par Matrice de Multi-Verrous Absolus
+L'arbitrage de conformité s'affranchit du disjoncteur unique. Le verdict final applique de manière simultanée trois fonctions indicatrices d'Iverson distinctes, issues du Journal Officiel de la République Algérienne :
+
+$$\text{Verdict}_{\text{Final}} = [\text{Verrou}_{\text{Sonelgaz}}] \times [\text{Verrou}_{\text{Hydrique}}] \times [\text{Verrou}_{\text{Scolaire}}]$$
+
+*   **Ouvrage Énergétique (Décret n° 07-144) :** $[\text{Verrou}_{\text{Sonelgaz}}] = [D_{\text{Gazoduc}} \ge 150\,\text{m}]$
+*   **Protection des Ressources en Eau (Loi n° 05-12) :** $[\text{Verrou}_{\text{Hydrique}}] = [D_{\text{Oued}} \ge 50\,\text{m}]$
+*   **Sanctuarisation des Périmètres Scolaires (Loi n° 04-20) :** $[\text{Verrou}_{\text{Scolaire}}] = [D_{\text{École}} \ge 100\,\text{m}]$
+
+Toute violation d'une seule de ces distances légales fait tomber le produit d'Iverson à 0, entraînant le rejet immédiat et automatisé du dossier d'urbanisme (Décret n° 15-19).
