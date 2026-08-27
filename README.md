@@ -1,14 +1,58 @@
-# Formalisation Mathématique et Modèle Homothétique
+markdown# 🛰️ Progiciel Expert : GeoIRPI v5.6
+## Direction de l'Environnement — Wilaya de Tizi Ouzou
+### Modélisation Géo-Relationnelle Spatiale de l'Indice IRPI par Approche de Screening Prudencielle Hybride
 
-Le calcul de l'Index de Risque Probabiliste Intégré ($IRPI_{\text{Spatial}}$) repose sur une fonction produit non compensatoire de type Cobb-Douglas, indexée sur l'effet multiplicateur de la masse de stockage confinée réelle ($M_{\text{kg}}$) :
+Ce dépôt présente le cadre algorithmique et la structure de données du modèle d'évaluation de la sécurité industrielle déconcentrée à l'échelle de la commune de Larbaâ Nath Irathen [Local].
 
-$$\Phi_{\text{Danger}} = \log_{10} \Big( \text{Masse}_{\text{Stockée (kg)}} \times \text{Enthalpie}_{\text{Substance (MJ/kg)}} \Big)$$
+---
 
-Le rayon de danger d'effet létal thermodynamique induit par l'onde de choc s'évalue selon la loi physique des gaz :
+### 🔬 1. Formalisation Mathématique et Modèle Source
+L'évaluation de l'Index de Risque Probabiliste Intégré ($\text{IRPI}_{\text{Spatial}}$) évalue le potentiel de danger source à partir de l'énergie totale libérable par le stockage, modélisé par une relation non compensatoire indexée sur la masse de stockage confinée réelle ($M_{\text{kg}}$) et l'enthalpie spécifique de la substance [Calcul] :
 
-$$R_{\text{Thermodynamique}} = 15 \times \sqrt[3]{\text{Masse}_{\text{Stockée (kg)}}}$$
+$$\Phi_{\text{Danger}} = \log_{10} \Big( M_{\text{kg}} \times \Delta H_{\text{Substance (MJ/kg)}} \Big)$$
 
-Afin de neutraliser les pathologies de saturation visuelle des moniteurs sur l'interface graphique de l'APC, le moteur visuel applique une réduction homothétique d'échelle d'un facteur de dix, découplant le flux de calcul réel du rendu de l'écran :
+Le rayon de danger d'effet létal thermodynamique induit par l'onde de choc (surpression accidentelle) est évalué selon la loi de mise à l'échelle de Hopkinson-Cranz (loi de cubication tridimensionnelle) pour les explosions de gaz ou de vapeurs confinées [Calcul] :
+
+$$R_{\text{Thermodynamique}} = K \times \sqrt[3]{M_{\text{kg}}}$$
+
+*Où $K$ est un coefficient empirique de surpression fixé par les standards internationaux (généralement $K = 5$ pour le seuil des effets létaux significatifs).*
+
+Afin de neutraliser les pathologies de saturation visuelle des moniteurs sur l'interface graphique de l'APC, le moteur visuel applique une réduction homothétique d'échelle d'un facteur de dix, découplant le flux de calcul réel du rendu de l'écran [Calcul] :
 
 $$R_{\text{Affichage Écran}} = \frac{R_{\text{Thermodynamique / Légal}}}{10}$$
-Continuum Réglementaire et Méthodologie du Maillage SIG Tri-Cartes1. Le Continuum Réglementaire et Disjoncteurs SpatiauxL'architecture logicielle du système expert intègre l'ensemble de la législation souveraine algérienne régissant les distances de sécurité et les couloirs de servitudes inconstructibles. Le moteur de contrôle applique de manière déterministe six barrières juridiques et physiques coordonnées par une clause restrictive relationnelle :Décret présidentiel n° 07-144 : Fixation d'une zone d'étanchéité absolue de 150 mètres de part et d'autre des canalisations de transport de gaz haute pression.Décret exécutif n° 11-204 : Établissement d'un couloir de servitude de 100 mètres autour des pipelines de transport d'hydrocarbures liquides et liquéfiés (GPL phase liquide).Arrêté interministériel du 14 juin 2011 (12 Rajab 1432) : Délimitation dynamique des distances de sécurité du réseau de distribution Moyenne Tension (MT - 30 kV), fixées à 15 mètres en zone rurale (conducteurs nus) et ramenées à 3 mètres en zone urbaine consolidée (câbles isolés torsadés).Décret exécutif n° 11-171 : Imposition d'un périmètre d'isolement et de protection thermique de 5 mètres autour des postes de transformation électrique (cabines et poteaux Sonelgaz).Décret exécutif n° 06-198 : Fixation de la nomenclature des ICPE et indexation des rayons légaux d'affichage d'enquête publique selon la classe d'activité (100 m pour le régime de Déclaration APC, 500 m pour l'Autorisation de Wilaya, et 1500 m pour le niveau Ministériel).Décret exécutif n° 15-19 : Cadre procédural suprême fixant les modalités d'instruction et de délivrance du Permis de Construire (PC) au niveau du guichet unique communal.2. Méthodologie du Maillage SIG Tri-CartesLe logiciel opère la superposition spatiale (Map Overlay) de trois cartes locales décentralisées à l'aide d'une jointure relationnelle de Niveau 2 (\(\Join \)) s'exécutant sur l'identifiant univoque de l'installation (\(\text{ID\_ICPE}\)) :\(\mathcal{S}_{\text{APC}}=\mathcal{H}_{(0..1)}\ \Big(\pi _{\text{Axes}}\ \big(\text{Carte}_{\text{ICPE}}\ \Join \ \text{Carte}_{\text{Énergie}}\ \Join \ \text{Carte}_{\text{Villages}}\big)\Big)\)Toute violation géométrique constatée par le croisement de la couche industrielle (capacités de stockage), de la couche énergétique (canalisations Sonelgaz) et de la couche anthropique (seuil des 100 mètres par rapport aux habitations des villages) déclenche l'édition automatisée d'une notification de rejet motivée ou d'un arrêté d'autorisation, garantissant une régularité, une transparence et une orthodoxie administrative d'une exactitude absolue.
+
+---
+
+### 📐 2. Méthodologie du Maillage SIG Tri-Cartes et Seuils Internationaux
+
+Le logiciel opère la superposition spatiale (*Map Overlay*) de trois cartes locales décentralisées à l'aide d'une jointure relationnelle de Niveau 2 ($\bowtie$) s'exécutant sur l'identifiant univoque de l'installation ($\text{ID\_ICPE}$) [Calcul] :
+
+$$\mathcal{S}_{\text{APC}} = \mathcal{H}_{(0..1)} \ \Big( \pi_{\text{Axes}} \ \big( \text{Carte}_{\text{ICPE}} \ \bowtie \ \text{Carte}_{\text{Énergie}} \ \bowtie \ \text{Carte}_{\text{Villages}}\big) \Big)$$
+
+Toute violation géométrique constatée par le croisement de la couche industrielle (capacités de stockage), de la couche énergétique (canalisations Sonelgaz) et de la couche anthropique déclenche l'édition automatisée d'une notification de rejet motivée ou d'un arrêté d'autorisation [Finance, Calcul].
+
+En l'absence de rayons fixes généralisés dans la législation nationale, le système expert applique une **approche prudencielle hybride**. Il intègre les distances guides de sécurité issues des standards internationaux (recommandations *Seveso III / US EPA / IChemE*) comme valeurs de pré-diagnostic par défaut, modulables selon la classe de l'installation [Calcul] :
+* **100 mètres (Seuil de vigilance bas) :** Appliqué par défaut pour la couche anthropique (habitations) sur les petites installations à faible potentiel de danger (équivalent régime de Déclaration APC).
+* **500 mètres (Seuil de sécurité intermédiaire) :** Zone tampon minimale par défaut pour les établissements de taille moyenne présentant des risques d'effets thermiques ou toxiques modérés (équivalent Autorisation de Wilaya).
+* **1500 mètres (Périmètre d'exclusion majeur) :** Rayon d'isolement par défaut appliqué aux complexes industriels à haut potentiel de dangers ou à effets dominos (équivalent Autorisation Ministérielle / Seuil Haut).
+
+Ces valeurs de référence sont écrasées dynamiquement dès l'injection des rayons d'effets létaux et irréversibles calculés spécifiquement dans l'Étude de Dangers (ED) de l'établissement [Calcul].
+
+---
+
+### ⚖| 3. Formalisme Booléen et Double Verrou de Contrôle
+L'évaluation finale des demandes d'implantation (Titre 3) s'exécute à travers une fonction logique binaire d'homologation administrative [Finance, Calcul] :
+
+$$\text{Verdict}_{\text{Final}} = \mathbf{1}_{\text{Droit\_Algérien}} \times \mathbf{1}_{\text{Expertise\_Technique}}$$
+
+#### A. Le Verrou Légal Exécutoire (Souveraineté Nationale)
+La décision administrative de délivrance ou de rejet de l'acte d'urbanisme (Décret exécutif n° 15-19) est asservie de manière exclusive à la conformité aux décrets algériens n° 07-144 (servitude de 150 mètres des gazoducs Sonelgaz) et n° 06-198 (rayons de la nomenclature) [Local, Finance] :
+
+$$\mathbf{1}_{\text{Droit\_Algérien}} = \sigma_{(D_{\text{Gaz}} \ge 150) \, \wedge \, (D_{\text{Taddart}} \ge \text{Rayon}_{\text{Rubrique}})}$$
+
+#### B. Le Module d'Expertise Subsidiaire (Consultatif)
+Les distances guides internationales interviennent à titre de garde-fou et de screening automatique. Toute intersection d'une infrastructure avec les périmètres guides suspend le visa d'engagement à la production d'une Étude de Dangers (ED) spécifique validée par la commission technique [Calcul].
+
+---
+*Documentation technique de projet — Conforme au cadre réglementaire en vigueur au sein de la République Algérienne Démocratique et Populaire.*
+
